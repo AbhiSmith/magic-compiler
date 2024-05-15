@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
@@ -16,7 +17,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { rustCompilar } from "@/lib/actions";
+
 const NavBar = () => {
+  const onClickRun = async () => {
+    const data = await rustCompilar();
+    console.log(data);
+  };
+
   return (
     <nav className="flex w-full screen-max-width px-6 py-2 shadow-sm justify-between bg-zinc-900">
       <Link href="/" className="text-zinc-100 text-xl font-extrabold pt-1 ">
@@ -39,7 +47,7 @@ const NavBar = () => {
             </SelectContent>
           </Select>
         </div>
-        <Button>
+        <Button onClick={() => onClickRun()}>
           <span className="px-3">Run</span>
         </Button>
       </div>
