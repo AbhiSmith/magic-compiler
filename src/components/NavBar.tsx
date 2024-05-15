@@ -1,11 +1,7 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
-import { Separator } from "@/components/ui/separator";
-import { ButtonIcon } from "@radix-ui/react-icons";
+import React, { useState } from "react";
+import Link from "next/link";
 import { Button } from "./ui/button";
 import {
   Select,
@@ -17,12 +13,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { rustCompilar } from "@/lib/actions";
+interface CommandProps {
+  onLanguageChange: (language: string) => void;
+  onLabelChange: (label: string) => void;
+  onClick: () => void;
+}
 
-const NavBar = () => {
-  const onClickRun = async () => {
-    const data = await rustCompilar();
-    console.log(data);
+const NavBar: React.FC<CommandProps> = ({
+  onLanguageChange,
+  onLabelChange,
+  onClick,
+}) => {
+  const [selectedLanguage, setSelectedLanguage] = useState("rust");
+  const [selectedLabel, setSelectedLabel] = useState("medium");
+
+  const handleLanguageChange = (value: string) => {
+    setSelectedLanguage(value);
+    onLanguageChange(value);
+  };
+
+  const handleLabelChange = (value: string) => {
+    setSelectedLabel(value);
+    onLabelChange(value);
+  };
+
+  const handleRunClick = () => {
+    onClick();
   };
 
   return (
@@ -32,22 +48,35 @@ const NavBar = () => {
       </Link>
 
       <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1 pt-1">
-        <div>
-          <Select>
+        <div className="flex gap-2">
+          <Select onValueChange={(value) => handleLanguageChange(value)}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select  Language" />
+              <SelectValue defaultValue={selectedLanguage} placeholder="Rust" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Programming Language</SelectLabel>
-                <SelectItem value="solidity">Solidity</SelectItem>
+                <SelectLabel>Choose Language</SelectLabel>
                 <SelectItem value="rust">Rust</SelectItem>
+                <SelectItem value="solidity">Solidity</SelectItem>
                 <SelectItem value="motoko">Motoko</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
+          <Select onValueChange={(value) => handleLabelChange(value)}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue defaultValue={selectedLabel} placeholder="Easy" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Difficulty</SelectLabel>
+                <SelectItem value="easy">Easy</SelectItem>
+                <SelectItem value="medium">Medium</SelectItem>
+                <SelectItem value="hard">Hard</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
-        <Button onClick={() => onClickRun()}>
+        <Button onClick={handleRunClick}>
           <span className="px-3">Run</span>
         </Button>
       </div>
