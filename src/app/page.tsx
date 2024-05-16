@@ -144,7 +144,7 @@ export default function Home() {
           </Card>
         </TabsContent>
         <TabsContent value="Both">
-          <Card className="border-0">
+          <Card className="border-0 border-zinc-950">
             <CardHeader>
               <CardTitle>{dirName}</CardTitle>
             </CardHeader>
