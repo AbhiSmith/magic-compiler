@@ -25,12 +25,12 @@ export const rustCompilar = async () => {
   const response = await axios.request(options);
   console.log("response", response);
 
-  //   try {
-  //     const response = await axios.request(options);
-  //     console.log(response.data);
-  //     return response.data; // Return the response data
-  //   } catch (error) {
-  //     console.error(error);
-  //     throw error; // Rethrow the error to be handled by the caller
-  //   }
+  try {
+    const response = await axios.request(options);
+    console.log(response.data);
+    return response.data; // Return the response data
+  } catch (error) {
+    console.error(error);
+    throw error; // Rethrow the error to be handled by the caller
+  }
 };
