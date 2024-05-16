@@ -12,17 +12,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 interface CommandProps {
   onLanguageChange: (language: string) => void;
   onLabelChange: (label: string) => void;
   onClick: () => void;
+  disable: boolean;
 }
 
 const NavBar: React.FC<CommandProps> = ({
   onLanguageChange,
   onLabelChange,
   onClick,
+  disable,
 }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("rust");
   const [selectedLabel, setSelectedLabel] = useState("medium");
@@ -76,8 +79,17 @@ const NavBar: React.FC<CommandProps> = ({
             </SelectContent>
           </Select>
         </div>
-        <Button onClick={handleRunClick}>
-          <span className="px-3">Run</span>
+        <Button onClick={handleRunClick} disabled={disable}>
+          <span className="px-3">
+            {disable ? (
+              <div className="flex">
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </div>
+            ) : (
+              "Run"
+            )}
+          </span>
         </Button>
       </div>
     </nav>

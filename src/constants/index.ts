@@ -16,5 +16,5 @@ export const motokoConst = {
       public query func hello() : async Text {
           "Hello, World!"
       };
-  }`,
+  };`,
 };
